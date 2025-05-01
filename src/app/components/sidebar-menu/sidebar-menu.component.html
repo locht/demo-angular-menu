@@ -1,0 +1,62 @@
+<nz-layout class="app-layout">
+  <nz-sider
+    class="menu-sidebar"
+    nzCollapsible
+    nzWidth="256px"
+    nzBreakpoint="md"
+    [(nzCollapsed)]="isCollapsed"
+    [nzTrigger]="null"
+    nzTheme="light"
+  >
+    <div class="sidebar-logo">
+        <img src="https://angular.dev/assets/icons/android-chrome-192x192.png" alt="logo" />
+        <h1 *ngIf="!isCollapsed">MENU CUSTOMER</h1>
+    </div>
+    <ul
+      nz-menu
+      nzTheme="light"
+      nzMode="inline"
+      [nzInlineCollapsed]="isCollapsed"
+    >
+      <ng-container *ngFor="let item of menuItems">
+        <li *ngIf="!item.children" nz-menu-item [routerLink]="item.link" routerLinkActive="ant-menu-item-selected" [routerLinkActiveOptions]="{exact: true}">
+          <span *ngIf="item.icon" nz-icon [nzType]="item.icon"></span>
+          <span>{{ item.title }}</span>
+        </li>
+        <li
+          *ngIf="item.children"
+          nz-submenu
+          [nzTitle]="item.title"
+          [nzIcon]="item.icon || null"
+        >
+          <ul>
+            <li
+              *ngFor="let child of item.children"
+              nz-menu-item
+              [routerLink]="child.link" routerLinkActive="ant-menu-item-selected" [routerLinkActiveOptions]="{exact: true}"
+            >
+              <span>{{ child.title }}</span>
+            </li>
+          </ul>
+        </li>
+      </ng-container>
+    </ul>
+  </nz-sider>
+  <nz-layout>
+    <nz-header>
+      <div class="app-header">
+        <span class="header-trigger" (click)="toggleCollapsed()">
+          <span
+            nz-icon
+            [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+          ></span>
+        </span>
+      </div>
+    </nz-header>
+    <nz-content>
+      <div class="inner-content">
+        <ng-content></ng-content>
+      </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>
