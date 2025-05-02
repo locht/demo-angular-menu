@@ -23,19 +23,19 @@ export class MenuService {
       children: [
         {
           title: 'Sản phẩm',
-          link: '/products'
+          link: '/quan-ly/products' // Updated link
         },
         {
           title: 'Đơn hàng',
-          link: '/orders'
+          link: '/quan-ly/orders' // Updated link
         },
         {
           title: 'Khách hàng',
-          link: '/customers'
+          link: '/quan-ly/customers' // Updated link
         },
         {
           title: 'Nhà cung cấp',
-          link: '/suppliers'
+          link: '/quan-ly/suppliers' // Updated link
         }
       ]
     },

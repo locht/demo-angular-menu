@@ -43,14 +43,36 @@
   padding: 0;
   background: #fff;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  display: flex; // Use flexbox for alignment
+  align-items: center; // Vertically center items
 }
 
 .header-trigger {
-  height: 64px;
+  // height: 64px;
   padding: 20px 24px;
   font-size: 20px;
   cursor: pointer;
   transition: all 0.3s, padding 0s;
+}
+
+.header-content {
+  display: flex;
+  flex-direction: column; // Stack breadcrumb and title vertically
+  justify-content: center; // Center content vertically within its container
+  margin-left: 16px; // Add some space between trigger and content
+  flex-grow: 1; // Allow content to take remaining space
+}
+
+.header-title {
+  margin: 0; // Remove default margin
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.2; // Adjust line height for better spacing
+}
+
+nz-breadcrumb {
+  margin-bottom: 4px; // Add space below breadcrumb
+  font-size: 12px; // Smaller font size for breadcrumbs
 }
 
 .trigger:hover {
