@@ -4,7 +4,7 @@ export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent), data: { title: 'Trang chủ' } },
   {
-    path: 'quan-ly', // Define the parent path for 'Quản lý'
+    path: 'management', // Define the parent path for 'Quản lý'
     data: { title: 'Quản lý' }, // Add title for the parent route
     children: [
       { path: 'products', loadComponent: () => import('./pages/products/products.component').then(m => m.ProductsComponent), data: { title: 'Sản phẩm' } },
