@@ -16,7 +16,6 @@
   padding-left: 24px;
   overflow: hidden;
   line-height: 64px;
-  background: #fff;
   transition: all 0.3s;
 
   img {
@@ -41,26 +40,109 @@
   position: relative;
   height: 64px;
   padding: 0;
-  background: #fff;
+  background: var(--header-bg, #fff);
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
-  display: flex; // Use flexbox for alignment
-  align-items: center; // Vertically center items
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .header-trigger {
-  // height: 64px;
-  padding: 20px 24px;
+  padding: 0 24px;
   font-size: 20px;
+  color: var(--text-color, rgba(0, 0, 0, 0.85));
   cursor: pointer;
-  transition: all 0.3s, padding 0s;
+  transition: all 0.3s;
+  height: 64px;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    color: #1890ff;
+  }
 }
 
 .header-content {
+  flex: 1;
   display: flex;
-  flex-direction: column; // Stack breadcrumb and title vertically
-  justify-content: center; // Center content vertically within its container
-  margin-left: 16px; // Add some space between trigger and content
-  flex-grow: 1; // Allow content to take remaining space
+  flex-direction: column;
+  //   padding: 0 24px;
+
+  .header-title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text-color, rgba(0, 0, 0, 0.85));
+  }
+
+  nz-breadcrumb {
+    margin-top: 4px;
+
+    ::ng-deep .ant-breadcrumb-link {
+      color: var(--text-secondary, rgba(0, 0, 0, 0.45));
+    }
+  }
+}
+
+.header-right-items {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 24px;
+
+  .nz-input-group {
+    width: 240px;
+    transition: width 0.3s;
+
+    &:focus-within {
+      width: 320px;
+    }
+
+    ::ng-deep {
+      .ant-input {
+        // background-color: var(--search-bg, #f5f5f5);
+        border-color: transparent;
+
+        &:focus {
+          background-color: var(--search-bg-focus, #fff);
+          border-color: #1890ff;
+        }
+      }
+    }
+  }
+
+  .header-icon {
+    font-size: 18px;
+    cursor: pointer;
+    color: var(--icon-color, rgba(0, 0, 0, 0.65));
+    transition: color 0.3s;
+    padding: 8px;
+    border-radius: 50%;
+    background: transparent;
+
+    &:hover {
+      color: #1890ff;
+      background-color: rgba(24, 144, 255, 0.1);
+    }
+  }
+
+  nz-badge {
+    display: flex;
+    align-items: center;
+  }
+}
+
+// Dark theme styles
+:host-context(.dark-theme) {
+  .app-header {
+    --header-bg: #1f1f1f;
+    --text-color: rgba(255, 255, 255, 0.85);
+    --text-secondary: rgba(255, 255, 255, 0.45);
+    --icon-color: rgba(255, 255, 255, 0.65);
+    --search-bg: rgba(255, 255, 255, 0.08);
+    --search-bg-focus: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+  }
 }
 
 .header-title {
@@ -81,7 +163,6 @@ nz-breadcrumb {
 
 .inner-content {
   padding: 24px;
-  background: #fff;
   height: 100%;
   overflow: auto;
 }
@@ -90,7 +171,7 @@ nz-breadcrumb {
 :host ::ng-deep {
   .ant-menu-item {
     margin: 0;
-    
+
     &:hover {
       background-color: rgba(255, 255, 255, 0.08);
     }
@@ -113,9 +194,18 @@ nz-breadcrumb {
 }
 
 .ant-layout-header {
-    height: 64px;
-    padding: 0px;
-    color: rgba(0, 0, 0, 0.85);
-    line-height: 64px;
-    background: #ffffff;
+  height: 64px;
+  padding: 0px;
+  color: rgba(0, 0, 0, 0.85);
+  line-height: 64px;
+  background: #ffffff;
+}
+
+::ng-deep .ant-badge-dot.ant-scroll-number {
+  top: 8px;
+  right: 8px;
+}
+
+::ng-deep .ant-breadcrumb > nz-breadcrumb-item:last-child a {
+    color: var(--text-primary);
 }

@@ -1,12 +1,21 @@
 import { Component, OnInit } from '@angular/core';
+import { LanguageService } from '../../services/language.service';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule, ActivatedRoute, NavigationEnd, PRIMARY_OUTLET } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
-import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb'; // Import NzBreadCrumbModule
+import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { MenuService, MenuItem } from '../../services/menu.service';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzBadgeModule } from 'ng-zorro-antd/badge';
+import { NzPopoverModule } from 'ng-zorro-antd/popover';
+import { ThemeService } from '../../services/theme.service';
+import { NotificationPopupComponent } from '../notification-popup/notification-popup.component';
+import { LanguagePopupComponent } from '../language-popup/language-popup.component';
+import { ProfilePopupComponent } from '../profile-popup/profile-popup.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 interface Breadcrumb {
   title: string;
@@ -22,8 +31,15 @@ interface Breadcrumb {
     NzMenuModule,
     NzIconModule,
     NzLayoutModule,
-    NzBreadCrumbModule // Add NzBreadCrumbModule here
-  ],
+    NzBreadCrumbModule,
+    NzInputModule,
+    NzBadgeModule,
+    NzPopoverModule,
+    NotificationPopupComponent,
+    LanguagePopupComponent,
+    ProfilePopupComponent,
+    TranslateModule
+],
   templateUrl: './sidebar-menu.component.html',
   styleUrl: './sidebar-menu.component.scss'
 })
@@ -33,12 +49,19 @@ export class SidebarMenuComponent implements OnInit {
   selectedPath: string = '';
   breadcrumbs: Breadcrumb[] = [];
   pageTitle: string = '';
+  isDarkMode$: any
 
   constructor(
     private menuService: MenuService,
     private router: Router,
-    private activatedRoute: ActivatedRoute // Inject ActivatedRoute
-  ) {}
+    private activatedRoute: ActivatedRoute,
+    private themeService: ThemeService,
+    private languageService: LanguageService
+  ) {
+    this.isDarkMode$ = this.themeService.isDarkMode$;
+    // Thiết lập ngôn ngữ mặc định
+    this.languageService.setLanguage('vi');
+  }
 
   ngOnInit(): void {
     this.menuItems = this.menuService.getMenuItems();
@@ -50,12 +73,19 @@ export class SidebarMenuComponent implements OnInit {
         this.selectedPath = this.router.url;
         this.breadcrumbs = this.buildBreadcrumbs(this.activatedRoute.root);
         // Set page title from the last breadcrumb or a default value
-        this.pageTitle = this.breadcrumbs.length > 0 ? this.breadcrumbs[this.breadcrumbs.length - 1].title : 'Dashboard';
+        // Use translate service to get the title if needed, or handle translation in the template
+        const lastBreadcrumbTitle = this.breadcrumbs.length > 0 ? this.breadcrumbs[this.breadcrumbs.length - 1].title : 'Dashboard';
+        this.pageTitle = this.languageService.getTranslation(lastBreadcrumbTitle);
       });
 
-    // Initial breadcrumb build on load
+    // Initial breadcrumb build and title set on load
     this.breadcrumbs = this.buildBreadcrumbs(this.activatedRoute.root);
-    this.pageTitle = this.breadcrumbs.length > 0 ? this.breadcrumbs[this.breadcrumbs.length - 1].title : 'Dashboard';
+    const initialTitleKey = this.breadcrumbs.length > 0 ? this.breadcrumbs[this.breadcrumbs.length - 1].title : 'Dashboard';
+    this.pageTitle = this.languageService.getTranslation(initialTitleKey);
+  }
+
+  toggleTheme(): void {
+    this.themeService.toggleTheme();
   }
 
   toggleCollapsed(): void {
@@ -81,15 +111,15 @@ export class SidebarMenuComponent implements OnInit {
         currentUrl = '/';
     }
 
-    // Get title from data
-    const routeTitle = route.snapshot.data['title'];
+    // Get title from data (this should be the translation key)
+    const routeTitleKey = route.snapshot.data['title'];
 
-    // Add breadcrumb if title exists and it's not a duplicate based on title AND link
-    // Also ensure we don't add breadcrumbs for wildcard routes or routes without a defined path unless it's the root with a title
-    if (routeTitle && route.routeConfig && (route.routeConfig.path !== '**')) {
-        // Add if it has a path, or if it's the root path ('') and has a title
-        if (route.routeConfig.path !== '' || (route.routeConfig.path === '' && routeTitle)) {
-            const newBreadcrumb: Breadcrumb = { title: routeTitle, link: currentUrl || '/' }; // Default link to '/' if somehow null
+    // Add breadcrumb if title key exists and it's not a duplicate based on title key AND link
+    // Also ensure we don't add breadcrumbs for wildcard routes or routes without a defined path unless it's the root with a title key
+    if (routeTitleKey && route.routeConfig && (route.routeConfig.path !== '**')) {
+        // Add if it has a path, or if it's the root path ('') and has a title key
+        if (route.routeConfig.path !== '' || (route.routeConfig.path === '' && routeTitleKey)) {
+            const newBreadcrumb: Breadcrumb = { title: routeTitleKey, link: currentUrl || '/' }; // Store the key in title
             if (!currentBreadcrumbs.some(b => b.link === newBreadcrumb.link && b.title === newBreadcrumb.title)) {
                 currentBreadcrumbs.push(newBreadcrumb);
             }

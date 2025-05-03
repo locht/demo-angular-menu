@@ -10,7 +10,7 @@
   >
     <div class="sidebar-logo">
         <img src="https://angular.dev/assets/icons/android-chrome-192x192.png" alt="logo" />
-        <h1 *ngIf="!isCollapsed">MENU CUSTOMER</h1>
+        <h1 *ngIf="!isCollapsed">{{ 'Quản Lý Sản Phẩm' | translate }}</h1>
     </div>
     <ul
       nz-menu
@@ -21,9 +21,9 @@
       <ng-container *ngFor="let item of menuItems">
         <li *ngIf="!item.children" nz-menu-item [routerLink]="item.link" routerLinkActive="ant-menu-item-selected" [routerLinkActiveOptions]="{exact: true}">
           <span *ngIf="item.icon" nz-icon [nzType]="item.icon"></span>
-          <span>{{ item.title }}</span>
+          <span>{{ item.title | translate }}</span>
         </li>
-        <li
+        <li 
           *ngIf="item.children"
           nz-submenu
           [nzTitle]="item.title"
@@ -35,7 +35,7 @@
               nz-menu-item
               [routerLink]="child.link" routerLinkActive="ant-menu-item-selected" [routerLinkActiveOptions]="{exact: true}"
             >
-              <span>{{ child.title }}</span>
+              <span>{{ child.title | translate }}</span>
             </li>
           </ul>
         </li>
@@ -52,12 +52,63 @@
           ></span>
         </span>
         <div class="header-content">
-          <h2 class="header-title">{{ pageTitle }}</h2>
+          <h2 class="header-title">{{ pageTitle | translate }}</h2>
           <nz-breadcrumb>
             <nz-breadcrumb-item *ngFor="let breadcrumb of breadcrumbs">
-              <a [routerLink]="breadcrumb.link">{{ breadcrumb.title }}</a>
+              <a [routerLink]="breadcrumb.link">{{ breadcrumb.title | translate }}</a>
             </nz-breadcrumb-item>
           </nz-breadcrumb>
+        </div>
+        <!-- Right side header items -->
+        <div class="header-right-items">
+          <!-- Search Bar -->
+           <div class="mr-2">
+            <nz-input-group [nzPrefix]="prefixIconSearch" >
+              <input type="text" nz-input placeholder="{{ 'Tìm kiếm' | translate }}" />
+            </nz-input-group>
+            <ng-template #prefixIconSearch>
+              <nz-icon nzType="search" />
+            </ng-template>
+           </div>
+
+          <!-- Theme Toggle Icon -->
+          <!-- <span nz-icon [nzType]="(themeService.isDarkMode$ | async) ? 'moon' : 'sun'" nzTheme="outline" class="header-icon" (click)="toggleTheme()"></span> -->
+          <span nz-icon [nzType]="(isDarkMode$ | async) ? 'moon' : 'sun'" nzTheme="outline" class="header-icon" (click)="toggleTheme()"></span>
+
+          <!-- Language Selection Icon -->
+          <span nz-icon nzType="global" nzTheme="outline" class="header-icon" 
+                nz-popover 
+                [nzPopoverContent]="languagePopup"
+                nzPopoverTrigger="click"
+                nzPopoverPlacement="bottomRight">
+          </span>
+          <ng-template #languagePopup>
+            <app-language-popup></app-language-popup>
+          </ng-template>
+
+          <!-- Notification Icon -->
+          <nz-badge nzDot>
+            <span nz-icon nzType="bell" nzTheme="outline" class="header-icon"
+                  nz-popover
+                  [nzPopoverContent]="notificationPopup"
+                  nzPopoverTrigger="click"
+                  nzPopoverPlacement="bottomRight">
+            </span>
+          </nz-badge>
+          <ng-template #notificationPopup>
+            <app-notification-popup></app-notification-popup>
+          </ng-template>
+
+          <!-- Profile Icon -->
+          <span nz-icon nzType="user" nzTheme="outline" class="header-icon"
+                nz-popover
+                [nzPopoverContent]="profilePopup"
+                nzPopoverTrigger="click"
+                nzPopoverPlacement="bottomRight">
+          </span>
+          <ng-template #profilePopup>
+            <app-profile-popup></app-profile-popup>
+          </ng-template>
         </div>
       </div>
     </nz-header>

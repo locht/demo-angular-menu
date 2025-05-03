@@ -1,1 +1,49 @@
-/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import 'theme.scss';
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+// Override Ant Design styles
+.ant-layout {
+  background-color: var(--bg-primary);
+}
+
+.ant-layout-sider {
+  background-color: var(--menu-bg);
+}
+
+.ant-menu {
+  background-color: var(--menu-bg);
+  color: var(--menu-item-text);
+
+  .ant-menu-item {
+    &:hover {
+      background-color: var(--menu-item-hover);
+    }
+
+    &.ant-menu-item-selected {
+      background-color: var(--menu-item-selected);
+    }
+  }
+}
+
+.ant-layout-header {
+  background-color: var(--header-bg);
+}
+
+.ant-input {
+  background-color: var(--search-bg);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+
+  &:focus {
+    background-color: var(--search-bg-focus);
+  }
+}

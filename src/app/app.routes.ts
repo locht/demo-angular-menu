@@ -14,15 +14,15 @@ export const routes: Routes = [
     ]
   },
   { path: 'reports', data: { title: 'Báo cáo' }, children: [
-    { path: 'revenue', loadComponent: () => import('./pages/products/products.component').then(m => m.ProductsComponent), data: { title: 'Doanh thu' } },
-    { path: 'inventory', loadComponent: () => import('./pages/products/products.component').then(m => m.ProductsComponent), data: { title: 'Tồn kho' } },
-    { path: 'customers', loadComponent: () => import('./pages/products/products.component').then(m => m.ProductsComponent), data: { title: 'Khách hàng' } },
+    { path: 'revenue', loadComponent: () => import('./components/not-found/not-found.component').then(m => m.NotFoundComponent), data: { title: 'Doanh thu' } },
+    { path: 'inventory', loadComponent: () => import('./components/not-found/not-found.component').then(m => m.NotFoundComponent), data: { title: 'Tồn kho' } },
+    { path: 'customers', loadComponent: () => import('./components/not-found/not-found.component').then(m => m.NotFoundComponent), data: { title: 'Khách hàng' } },
   ]},
   { path: 'settings', data: { title: 'Cài đặt' }, children: [
-    { path: 'store', loadComponent: () => import('./pages/products/products.component').then(m => m.ProductsComponent), data: { title: 'Cửa hàng' } },
-    { path: 'users', loadComponent: () => import('./pages/products/products.component').then(m => m.ProductsComponent), data: { title: 'Người dùng' } },
-    { path: 'roles', loadComponent: () => import('./pages/products/products.component').then(m => m.ProductsComponent), data: { title: 'Vai trò' } },
+    { path: 'store', loadComponent: () => import('./components/not-found/not-found.component').then(m => m.NotFoundComponent), data: { title: 'Cửa hàng' } },
+    { path: 'users', loadComponent: () => import('./components/not-found/not-found.component').then(m => m.NotFoundComponent), data: { title: 'Người dùng' } },
+    { path: 'roles', loadComponent: () => import('./components/not-found/not-found.component').then(m => m.NotFoundComponent), data: { title: 'Vai trò' } },
   ]},
-  { path: 'help', loadComponent: () => import('./pages/products/products.component').then(m => m.ProductsComponent), data: { title: 'Trợ giúp' } },
-  { path: '**', redirectTo: 'home' }
+  { path: 'help', loadComponent: () => import('./components/not-found/not-found.component').then(m => m.NotFoundComponent), data: { title: 'Trợ giúp' } },
+  { path: '**', loadComponent: () => import('./components/not-found/not-found.component').then(m => m.NotFoundComponent) }
 ];

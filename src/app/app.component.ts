@@ -11,4 +11,7 @@ import { SidebarMenuComponent } from './components/sidebar-menu/sidebar-menu.com
 })
 export class AppComponent {
   title = 'demo-menu';
+
+  constructor() {
+  }
 }

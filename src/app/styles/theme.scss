@@ -1,0 +1,77 @@
+// Theme styles
+.dark-theme {
+  // Background colors
+  --bg-primary: #141414;
+  --bg-secondary: #1f1f1f;
+  --bg-tertiary: #262626;
+  
+  // Text colors
+  --text-primary: rgba(255, 255, 255, 0.95);
+  --text-secondary: rgba(255, 255, 255, 0.85);
+  --text-disabled: rgba(255, 255, 255, 0.65);
+  
+  // Border colors
+  --border-color: #434343;
+  
+  // Component colors
+  --component-background: #1f1f1f;
+  --item-hover-bg: rgba(255, 255, 255, 0.08);
+  --item-active-bg: #177ddc;
+  
+  // Apply theme to components
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  
+  .ant-layout {
+    background-color: var(--bg-primary);
+  }
+  
+  .ant-layout-header {
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .ant-layout-sider {
+    background-color: var(--bg-secondary);
+    border-right: 1px solid var(--border-color);
+  }
+  
+  .ant-menu {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    
+    .ant-menu-item {
+      color: var(--text-primary);
+      
+      &:hover {
+        background-color: var(--item-hover-bg);
+      }
+      
+      &.ant-menu-item-selected {
+        background-color: var(--item-active-bg);
+        color: #fff;
+      }
+    }
+  }
+  
+  .ant-card {
+    background-color: var(--bg-secondary);
+    border-color: var(--border-color);
+    
+    .ant-card-head {
+      color: var(--text-primary);
+      border-bottom-color: var(--border-color);
+    }
+  }
+  
+  .ant-typography {
+    color: var(--text-primary);
+  }
+
+  .ant-breadcrumb {
+    color: var(--text-primary);
+    .nz-breadcrumb-item:last-child a {
+      color: var(--text-primary);
+    }
+  }
+}

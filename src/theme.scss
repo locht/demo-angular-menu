@@ -1,0 +1,74 @@
+:root {
+  // Light theme variables
+  --bg-primary: #ffffff;
+  --bg-secondary: #f5f5f5;
+  --text-primary: rgba(0, 0, 0, 0.85);
+  --text-secondary: rgba(0, 0, 0, 0.45);
+  --border-color: #d9d9d9;
+  --header-bg: #fff;
+  --menu-bg: #fff;
+  --menu-item-hover: #f5f5f5;
+  --menu-item-selected: #e6f7ff;
+  --menu-item-text: rgba(0, 0, 0, 0.85);
+  --icon-color: rgba(0, 0, 0, 0.65);
+  --search-bg: #f5f5f5;
+  --search-bg-focus: #fff;
+}
+
+.dark-theme {
+  --bg-primary: #141414;
+  --bg-secondary: #1f1f1f;
+  --text-primary: rgba(255, 255, 255, 0.85);
+  --text-secondary: rgba(255, 255, 255, 0.45);
+  --border-color: #434343;
+  --header-bg: #1f1f1f;
+  --menu-bg: #1f1f1f;
+  --menu-item-hover: #252525;
+  --menu-item-selected: #111b26;
+  --menu-item-text: rgba(255, 255, 255, 0.85);
+  --icon-color: rgba(255, 255, 255, 0.65);
+  --search-bg: rgba(255, 255, 255, 0.08);
+  --search-bg-focus: rgba(255, 255, 255, 0.12);
+
+  // Apply dark theme styles to body and components
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+
+  // Override Ant Design dark theme styles
+  .ant-layout {
+    background-color: var(--bg-primary);
+  }
+
+  .ant-layout-sider {
+    background-color: var(--menu-bg);
+  }
+
+  .ant-menu {
+    background-color: var(--menu-bg);
+    color: var(--menu-item-text);
+
+    .ant-menu-item {
+      &:hover {
+        background-color: var(--menu-item-hover);
+      }
+
+      &.ant-menu-item-selected {
+        background-color: var(--menu-item-selected);
+      }
+    }
+  }
+
+  .ant-layout-header {
+    background-color: var(--header-bg);
+  }
+
+  .ant-input {
+    background-color: var(--search-bg);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+
+    &:focus {
+      background-color: var(--search-bg-focus);
+    }
+  }
+}
